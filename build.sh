@@ -4,7 +4,7 @@ set -eu
 
 BRANCH=${1}
 shift
-APPS="webapp webapp-crm webapp-messaging"
+APPS="webapp-chrome webapp-crm webapp-messaging"
 
 echo "################################################################################"
 echo "Unpacking..."
@@ -44,5 +44,8 @@ for APP in ${APPS}; do
     rm -rf /build/${APP}.zip /build/${APP}-${BRANCH}
 done
 
+echo "################################################################################"
+echo "Place apps where they need to be..."
+mv /crust/webapp-chrome /crust/webapp
 mv /crust/webapp-messaging /crust/webapp/messaging
 mv /crust/webapp-crm /crust/webapp/crm

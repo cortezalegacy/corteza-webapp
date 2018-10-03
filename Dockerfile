@@ -4,12 +4,12 @@ WORKDIR /crust
 
 ENV BRANCH master
 
-ADD https://github.com/crusttech/webapp/archive/${BRANCH}.zip           /build/webapp.zip
+ADD https://github.com/crusttech/webapp-chrome/archive/${BRANCH}.zip    /build/webapp-chrome.zip
 ADD https://github.com/crusttech/webapp-crm/archive/${BRANCH}.zip       /build/webapp-crm.zip
 ADD https://github.com/crusttech/webapp-messaging/archive/${BRANCH}.zip /build/webapp-messaging.zip
 
 ADD *.sh /build/
-RUN sh /build/webapp-builder.sh ${BRANCH}
+RUN sh /build/build.sh ${BRANCH}
 
 FROM nginx:1.15-alpine AS production
 
