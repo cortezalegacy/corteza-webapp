@@ -2,4 +2,5 @@
 
 set -eu
 
-cp -v src/api/config.js.example src/api/config.js
+# cp -v src/api/config.js.example src/api/config.js
+
