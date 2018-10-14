@@ -4,10 +4,7 @@ WORKDIR /crust
 
 ENV BRANCH master
 
-ADD https://github.com/crusttech/webapp-chrome/archive/${BRANCH}.zip    /build/webapp-chrome.zip
-ADD https://github.com/crusttech/webapp-crm/archive/${BRANCH}.zip       /build/webapp-crm.zip
-ADD https://github.com/crusttech/webapp-messaging/archive/${BRANCH}.zip /build/webapp-messaging.zip
-
+RUN apk update && apk upgrade && apk add --no-cache git
 ADD *.sh /build/
 RUN sh /build/build.sh ${BRANCH}
 
