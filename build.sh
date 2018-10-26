@@ -7,7 +7,7 @@ shift
 APPS="webapp-chrome webapp-crm webapp-messaging"
 
 echo "################################################################################"
-echo "Cloning repositories..."
+echo "Cloning repositories (branch: ${BRANCH})..."
 for APP in ${APPS}; do
     git clone --single-branch --branch ${BRANCH} https://github.com/crusttech/${APP}.git /build/${APP}
 done

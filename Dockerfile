@@ -2,11 +2,11 @@ FROM node:8-alpine AS builder
 RUN mkdir -p /crust /build
 WORKDIR /crust
 
-ENV BRANCH master
+ARG BRANCH=latest
 
 RUN apk update && apk upgrade && apk add --no-cache git
 ADD *.sh /build/
-RUN sh /build/build.sh ${BRANCH}
+RUN sh /build/build.sh $BRANCH
 
 FROM nginx:1.15-alpine AS production
 
