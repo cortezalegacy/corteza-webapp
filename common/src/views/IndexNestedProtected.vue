@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import protect from '@/mixins/protect'
+import auth from '@/mixins/auth'
 export default {
-  mixins: [protect]
+  mixins: [auth],
 }
 </script>
