@@ -1,4 +1,4 @@
-.PHONY: docker push
+.PHONY: build push run
 
 TAG=latest
 IMAGE=crusttech/webapp

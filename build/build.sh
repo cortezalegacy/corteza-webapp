@@ -4,12 +4,12 @@ set -eu
 
 BRANCH=${1}
 shift
-APPS="webapp-chrome webapp-crm webapp-messaging"
+APPS="webapp-chrome webapp-crm webapp-messaging webapp-admin"
 
 echo "################################################################################"
 echo "Cloning repositories (branch: ${BRANCH})..."
 for APP in ${APPS}; do
-    git clone --single-branch --branch ${BRANCH} https://github.com/crusttech/${APP}.git /build/${APP}
+    time git clone --progress --verbose --depth=1 --single-branch --branch ${BRANCH} https://github.com/crusttech/${APP}.git /build/${APP}
 done
 
 echo "################################################################################"
@@ -29,8 +29,12 @@ for APP in ${APPS}; do
     echo "================================================================================"
     echo "${APP}"
     cd /build/${APP}
-    yarn
-    yarn build
+    echo "> install"
+    time yarn install --frozen-lockfile
+    echo "> build"
+    time yarn build
+    echo "> cleanup"
+    rm -rf node_modules
 done
 
 echo "################################################################################"
@@ -45,5 +49,6 @@ echo "Place apps where they need to be..."
 mv /crust/webapp-chrome /crust/webapp
 mv /crust/webapp-messaging /crust/webapp/messaging
 mv /crust/webapp-crm /crust/webapp/crm
+mv /crust/webapp-admin /crust/webapp/admin
 
 echo "Done."

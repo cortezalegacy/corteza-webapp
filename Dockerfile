@@ -1,16 +1,16 @@
-FROM node:8-alpine AS builder
+FROM crusttech/webapp-dev AS builder
+
 RUN mkdir -p /crust /build
 WORKDIR /crust
 
 ARG BRANCH=latest
 
-RUN apk update && apk upgrade && apk add --no-cache git
-ADD *.sh /build/
+ADD build/*.sh /build/
 RUN sh /build/build.sh $BRANCH
 
 FROM nginx:1.15-alpine AS production
 
-COPY nginx.conf /etc/nginx/nginx.conf
+ADD build/etc/ /etc
 RUN nginx -t
 
 COPY --from=builder /crust /crust
