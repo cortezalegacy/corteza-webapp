@@ -1,19 +1,16 @@
-FROM crusttech/webapp-dev AS builder
+FROM crusttech/webapp-builder:latest
 
-RUN mkdir -p /crust /build
-WORKDIR /crust
+# No docker tasks, prepare webapp and leave dist files for production stage to pick it up
+RUN /crust/entrypoint.sh --branch latest --skip-docker-build --skip-docker-push
 
-ARG BRANCH=latest
-
-ADD build/*.sh /build/
-RUN sh /build/build.sh $BRANCH
 
 FROM nginx:1.15-alpine AS production
 
-ADD build/etc/ /etc
+COPY --from=build /crust/nginx.conf /etc
 RUN nginx -t
 
-COPY --from=builder /crust /crust
+RUN mkdir -p /crust
+COPY --from=build /crust/dist /crust/webapp
 
 EXPOSE 80
 
