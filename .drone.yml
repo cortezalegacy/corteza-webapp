@@ -1,0 +1,28 @@
+kind: pipeline
+name: Build & Pack
+
+steps:
+  - name: collect
+    image: crusttech/webapp-builder
+    volumes:
+      - name: webapp-build
+        path: /var/build
+    commands:
+      - cp -v /var/build/webapp-*-$DRONE_BRANCH.tar.bz2 ./
+
+  - name: build image
+    image: plugins/docker
+    settings:
+      repo: crusttech/webapp
+      auto_tag: true # generate tag names automatically based on git branch and git tag
+      username:
+        from_secret: docker_hub_username
+      password:
+        from_secret: docker_hub_password
+
+trigger:
+
+volumes:
+  - name: webapp-build
+    host:
+      path: /var/build/drone/webapp-build
