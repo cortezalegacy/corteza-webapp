@@ -4,7 +4,7 @@ set -eu
 
 BRANCH=${1:-"master"}
 
-APPS="admin auth crm messaging"
+APPS="admin auth compose messaging"
 
 echo "Unpacking unify"
 mkdir -p dist/
