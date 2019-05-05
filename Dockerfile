@@ -1,14 +1,15 @@
-FROM nginx:1.15-alpine
-
-RUN mkdir -p /crust
-WORKDIR /crust
-
-COPY nginx.conf /etc/nginx/
-RUN nginx -t
+FROM nginx:1.15-alpine as builder
 
 COPY build.sh webapp-*.tar.bz2 /crust/
-RUN cd /crust && sh build.sh && mv dist webapp
+WORKDIR /crust
+RUN sh build.sh
 
-COPY start.sh /crust/
 
-CMD ["sh", "/crust/start.sh"]
+FROM nginx:1.15-alpine
+
+COPY files/ /
+COPY --from=builder /crust/webapp /crust/webapp
+
+RUN nginx -t
+
+ENTRYPOINT ["/start.sh"]

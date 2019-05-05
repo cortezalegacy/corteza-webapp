@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
-
 set -eu
 
 CONFIG_FILE_GEN=${CONFIG_FILE_GEN:-"1"}
 
-
 function generate {
+	echo "Generating webapp configs"
+
 	API_BASEURL=${API_BASEURL:-"${VIRTUAL_HOST}"}
 	API_BASEURL=${API_BASEURL:-"local.crust.tech"}
 	BASEDIR=${BASEDIR:-"/crust/webapp"}
@@ -28,5 +28,3 @@ EOF
 }
 
 [[ "$CONFIG_FILE_GEN" -eq "1" ]] && generate
-
-nginx -g "daemon off;"

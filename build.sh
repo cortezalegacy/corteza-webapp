@@ -17,3 +17,5 @@ for APP in $APPS; do
 done;
 
 rm webapp-*.tar.bz2
+
+mv dist webapp
