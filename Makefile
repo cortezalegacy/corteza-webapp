@@ -4,13 +4,13 @@ TAG=latest
 IMAGE=crusttech/webapp
 
 build:
-	docker build --no-cache -t $(IMAGE):$(TAG) --build-arg BRANCH=beta .
+	docker build --no-cache -t $(IMAGE):$(TAG) .
 
 push:
 	docker push $(IMAGE):$(TAG)
 
 run:
-	docker run --rm -it -e VIRTUAL_HOST="test" -P $(IMAGE):$(TAG)
+	docker run --rm -it -e -P $(IMAGE):$(TAG)
 
 run-echo:
-	docker run --rm -it -e VIRTUAL_HOST="test" $(IMAGE):$(TAG) echo Hello world
+	docker run --rm -it -e $(IMAGE):$(TAG) echo Hello world
