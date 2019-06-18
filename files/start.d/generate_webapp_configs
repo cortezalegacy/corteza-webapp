@@ -4,7 +4,7 @@ set -eu
 
 VIRTUAL_HOST=${VIRTUAL_HOST:-"local.crust.tech"}
 API_BASEURL=${API_BASEURL:-"${VIRTUAL_HOST}"}
-BASEDIR=${BASEDIR:-"/crust/webapp"}
+BASEDIR=${BASEDIR:-"/webapp"}
 
 API_SCHEME=${API_SCHEME:-""}
 API_BASEURL_SYSTEM=${API_BASEURL_SYSTEM:-"${API_SCHEME}//system.api.${API_BASEURL}"}
@@ -17,7 +17,7 @@ tee \
 	${BASEDIR}/admin/config.js \
 	${BASEDIR}/compose/config.js \
 	> ${BASEDIR}/config.js << EOF
-window.CrustSystemAPI = '${API_BASEURL_SYSTEM}'
-window.CrustMessagingAPI = '${API_BASEURL_MESSAGING}'
-window.CrustComposeAPI = '${API_BASEURL_COMPOSE}'
+window.SystemAPI = '${API_BASEURL_SYSTEM}'
+window.MessagingAPI = '${API_BASEURL_MESSAGING}'
+window.ComposeAPI = '${API_BASEURL_COMPOSE}'
 EOF

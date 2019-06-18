@@ -1,7 +1,7 @@
 FROM nginx:1.15-alpine as builder
 
-COPY build.sh webapp-*.tar.bz2 /crust/
-WORKDIR /crust
+COPY build.sh *-webapp-*.tar.bz2 /
+WORKDIR /
 RUN sh build.sh
 
 FROM nginx:1.15-alpine
@@ -15,6 +15,6 @@ RUN nginx -t
 RUN chmod +x /start.d/*
 
 # Copy webapp files
-COPY --from=builder /crust/webapp /crust/webapp
+COPY --from=builder /webapp /webapp
 
 ENTRYPOINT ["/entrypoint.sh"]

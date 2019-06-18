@@ -1,7 +1,7 @@
-.PHONY: build push run run-echo
+.PHONY: build push run
 
 TAG=latest
-IMAGE=crusttech/webapp
+IMAGE=cortezaproject/corteza-webapp
 
 build:
 	docker build --no-cache -t $(IMAGE):$(TAG) .
@@ -11,6 +11,3 @@ push:
 
 run:
 	docker run --rm -it -e -P $(IMAGE):$(TAG)
-
-run-echo:
-	docker run --rm -it -e $(IMAGE):$(TAG) echo Hello world

@@ -3,17 +3,17 @@ name: Build & Pack
 
 steps:
   - name: collect
-    image: crusttech/webapp-builder
+    image: cortezaproject/corteza-webapp-builder
     volumes:
       - name: webapp-build
         path: /var/build
     commands:
-      - cp -v /var/build/webapp-*-$DRONE_BRANCH.tar.bz2 ./
+      - cp -v /var/build/${DRONE_REPO_NAME}-*-$DRONE_BRANCH.tar.bz2 ./
 
   - name: build image
     image: plugins/docker
     settings:
-      repo: crusttech/webapp
+      repo: ${DRONE_REPO_NAMESPACE}/${DRONE_REPO_NAME}
       auto_tag: true # generate tag names automatically based on git branch and git tag
       username:
         from_secret: docker_hub_username
