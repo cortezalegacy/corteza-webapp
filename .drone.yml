@@ -8,7 +8,7 @@ steps:
       - name: webapp-build
         path: /var/build
     commands:
-      - cp -v /var/build/${DRONE_REPO_NAME}-*-$DRONE_BRANCH.tar.bz2 ./
+      - sh collect.sh
 
   - name: build image
     image: plugins/docker
