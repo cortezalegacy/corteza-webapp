@@ -2,32 +2,34 @@
 
 set -eu
 
-VIRTUAL_HOST=${VIRTUAL_HOST:-"local.crust.tech"}
-API_BASEURL=${API_BASEURL:-"${VIRTUAL_HOST}"}
+VIRTUAL_HOST=${VIRTUAL_HOST:-"local.cortezaproject.org"}
 BASEDIR=${BASEDIR:-"/webapp"}
 
 # All APIs are on the same domian
 MONOLITH_API=${MONOLITH_API:-""}
 
 API_SCHEME=${API_SCHEME:-""}
+API_PREFIX=${API_PREFIX:-"api."}
 
 if [ ! -z "${MONOLITH_API}" ]; then
-  API_BASEURL_SYSTEM="${API_SCHEME}//api.${API_BASEURL}/system"
-  API_BASEURL_MESSAGING="${API_SCHEME}//api.${API_BASEURL}/messaging"
-  API_BASEURL_COMPOSE="${API_SCHEME}//api.${API_BASEURL}/compose"
+  API_BASEURL=${API_BASEURL:-"${API_PREFIX}${VIRTUAL_HOST}"}
+  API_BASEURL_SYSTEM=${API_BASEURL_SYSTEM:-"${API_SCHEME}//${API_BASEURL}/system"}
+  API_BASEURL_MESSAGING=${API_BASEURL_MESSAGING:-"${API_SCHEME}//${API_BASEURL}/messaging"}
+  API_BASEURL_COMPOSE=${API_BASEURL_COMPOSE:-"${API_SCHEME}//${API_BASEURL}/compose"}
 else
-  API_BASEURL_SYSTEM=${API_BASEURL_SYSTEM:-"${API_SCHEME}//system.api.${API_BASEURL}"}
-  API_BASEURL_MESSAGING=${API_BASEURL_MESSAGING:-"${API_SCHEME}//messaging.api.${API_BASEURL}"}
-  API_BASEURL_COMPOSE=${API_BASEURL_COMPOSE:-"${API_SCHEME}//compose.api.${API_BASEURL}"}
+  API_BASEURL=${API_BASEURL:-"${VIRTUAL_HOST}"}
+  API_BASEURL_SYSTEM=${API_BASEURL_SYSTEM:-"${API_SCHEME}//system.${API_PREFIX}${API_BASEURL}"}
+  API_BASEURL_MESSAGING=${API_BASEURL_MESSAGING:-"${API_SCHEME}//messaging.${API_PREFIX}${API_BASEURL}"}
+  API_BASEURL_COMPOSE=${API_BASEURL_COMPOSE:-"${API_SCHEME}//compose.${API_PREFIX}${API_BASEURL}"}
 fi
 
 tee \
-	${BASEDIR}/messaging/config.js \
-	${BASEDIR}/auth/config.js \
-	${BASEDIR}/admin/config.js \
-	${BASEDIR}/compose/config.js \
-	${BASEDIR}/config.js \
-	> /dev/null \
+  ${BASEDIR}/messaging/config.js \
+  ${BASEDIR}/auth/config.js \
+  ${BASEDIR}/admin/config.js \
+  ${BASEDIR}/compose/config.js \
+  ${BASEDIR}/config.js \
+  > /dev/null \
 << EOF
 window.SystemAPI = '${API_BASEURL_SYSTEM}'
 window.MessagingAPI = '${API_BASEURL_MESSAGING}'
