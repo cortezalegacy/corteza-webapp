@@ -9,16 +9,26 @@ steps:
         path: /var/build
     commands:
       - sh collect.sh
+      - sh build.sh
+    when:
+      ref:
+        - refs/heads/master
+        - refs/heads/beta
+        - refs/heads/feature-*
+        - refs/tags/20??.*.*
+      events: [ tag, push ]
 
   - name: build image
     image: plugins/docker
     settings:
       repo: ${DRONE_REPO_NAMESPACE}/${DRONE_REPO_NAME}
-      auto_tag: true # generate tag names automatically based on git branch and git tag
+      tags:
+        - "${APP_VERSION/master/latest}"
       username:
         from_secret: docker_hub_username
       password:
         from_secret: docker_hub_password
+
 
 trigger:
 
