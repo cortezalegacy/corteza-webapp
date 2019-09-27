@@ -9,5 +9,4 @@ RUN nginx -t
 # Make all startup scripts executable
 RUN chmod +x /start.d/*
 
-
 ENTRYPOINT ["/entrypoint.sh"]
